@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的个人博客</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: #ffdd40;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 主内容区样式 */
+        .main-content {
+            display: flex;
+            margin: 40px 0;
+            gap: 30px;
+        }
+        
+        .posts {
+            flex: 2;
+        }
+        
+        .sidebar {
+            flex: 1;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .section-title {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #6a11cb;
+        }
+        
+        .post {
+            display: flex;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .post:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .post-img {
+            width: 200px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+        
+        .post-content h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .post-meta {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        
+        .post-meta i {
+            margin-right: 5px;
+        }
+        
+        .read-more {
+            display: inline-block;
+            margin-top: 10px;
+            color: #6a11cb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        /* 侧边栏样式 */
+        .about-me {
+            text-align: center;
+            padding: 25px;
+        }
+        
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 4px solid #6a11cb;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: #6a11cb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            transform: scale(1.1);
+            background: #2575fc;
+        }
+        
+        .popular-posts ul {
+            list-style: none;
+        }
+        
+        .popular-posts li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .popular-posts li:last-child {
+            border-bottom: none;
+        }
+        
+        .popular-posts a {
+            color: #2c3e50;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: block;
+        }
+        
+        .popular-posts a:hover {
+            color: #6a11cb;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag {
+            background: #f1f2f6;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .tag:hover {
+            background: #6a11cb;
+            color: white;
+            cursor: pointer;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #6a11cb;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .post {
+                flex-direction: column;
+            }
+            
+            .post-img {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-blog"></i>
+                    <span>我的博客</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#"><i class="fas fa-home"></i> 首页</a></li>
+                    <li><a href="#"><i class="fas fa-folder"></i> 分类</a></li>
+                    <li><a href="#"><i class="fas fa-tags"></i> 标签</a></li>
+                    <li><a href="#"><i class="fas fa-user"></i> 关于</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> 联系</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <div class="container">
+        <div class="main-content">
+            <!-- 文章列表 -->
+            <div class="posts">
+                <div class="card">
+                    <h2 class="section-title">最新文章</h2>
+                    
+                    <div class="post">
+                        <img src="https://images.unsplash.com/photo-1661956602116-aa6865609028?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="文章图片" class="post-img">
+                        <div class="post-content">
+                            <h3>前端开发中的现代CSS技术</h3>
+                            <div class="post-meta">
+                                <span><i class="far fa-calendar"></i> 2023年10月15日</span>
+                                <span><i class="far fa-user"></i> 张小明</span>
+                                <span><i class="far fa-folder"></i> 前端开发</span>
+                            </div>
+                            <p>在现代Web开发中，CSS已经远不止是简单的样式表语言。Flexbox、Grid、自定义属性等新技术彻底改变了我们构建布局的方式。本文将探讨这些现代CSS技术如何提高开发效率和用户体验。</p>
+                            <a href="#" class="read-more">阅读更多 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="post">
+                        <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="文章图片" class="post-img">
+                        <div class="post-content">
+                            <h3>JavaScript异步编程最佳实践</h3>
+                            <div class="post-meta">
+                                <span><i class="far fa-calendar"></i> 2023年10月10日</span>
+                                <span><i class="far fa-user"></i> 李开发</span>
+                                <span><i class="far fa-folder"></i> JavaScript</span>
+                            </div>
+                            <p>从回调函数到Promise，再到async/await，JavaScript的异步编程模式不断演进。了解这些模式的工作原理以及如何避免常见的陷阱，对于编写健壮的异步代码至关重要。</p>
+                            <a href="#" class="read-more">阅读更多 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="post">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="文章图片" class="post-img">
+                        <div class="post-content">
+                            <h3>响应式网页设计原则与技巧</h3>
+                            <div class="post-meta">
+                                <span><i class="far fa-calendar"></i> 2023年10月5日</span>
+                                <span><i class="far fa-user"></i> 王设计师</span>
+                                <span><i class="far fa-folder"></i> UI设计</span>
+                            </div>
+                            <p>随着移动设备使用的不断增加，响应式设计不再是可选项，而是必需品。本文将介绍响应式设计的基本原则，并分享一些实用的技巧，帮助您创建在各种设备上都能完美显示的网站。</p>
+                            <a href="#" class="read-more">阅读更多 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 侧边栏 -->
+            <div class="sidebar">
+                <!-- 关于我 -->
+                <div class="card about-me">
+                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="个人头像" class="profile-img">
+                    <h3>关于我</h3>
+                    <p>前端开发工程师，热爱Web技术和用户体验设计。喜欢分享知识和学习新技术。</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                    </div>
+                </div>
+                
+                <!-- 热门文章 -->
+                <div class="card popular-posts">
+                    <h3 class="section-title">热门文章</h3>
+                    <ul>
+                        <li><a href="#">Vue 3组合式API完全指南</a></li>
+                        <li><a href="#">CSS Grid布局实战案例</a></li>
+                        <li><a href="#">优化网站性能的10个技巧</a></li>
+                        <li><a href="#">TypeScript在React项目中的最佳实践</a></li>
+                        <li><a href="#">Web可访问性设计指南</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 标签云 -->
+                <div class="card">
+                    <h3 class="section-title">标签云</h3>
+                    <div class="tags">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">HTML</span>
+                        <span class="tag">Vue</span>
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">前端</span>
+                        <span class="tag">响应式设计</span>
+                        <span class="tag">TypeScript</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于博客</h3>
+                    <p>分享Web开发技术与设计理念，记录学习过程与心得体会。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">首页</a></li>
+                        <li><a href="#">关于我</a></li>
+                        <li><a href="#">项目作品</a></li>
+                        <li><a href="#">联系方式</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系方式</h3>
+                    <p><i class="fas fa-envelope"></i> contact@example.com</p>
+                    <p><i class="fas fa-phone"></i> +86 123 4567 8901</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 我的个人博客 - 版权所有</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
